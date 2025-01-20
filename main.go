@@ -22,7 +22,11 @@ func main() {
 	if filename == "" {
 		filename = "database.db"
 	}
+	url := env.Get("URL_OF_API_CO2")
+	if url == "" {
+		url = "http://localhost:8000"
+	}
 	Client := api.InitApi(port, filename)
-	Client.RegisterHandlers()
+	Client.RegisterHandlers(url)
 	Client.Start()
 }

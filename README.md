@@ -8,7 +8,10 @@
 ```
 PORT=8080 
 DB_FILE_PATH=./db.db
+URL_OF_API_CO2=http://localhost:8000
 ```
+4. Clone the repository of the API CO2 [here](https://github.com/Luxchar/api_hackaton) and configure the URL in the `.env` file
+
 
 ## How to run the project
 

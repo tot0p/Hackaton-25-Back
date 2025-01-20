@@ -6,7 +6,7 @@ import (
 	"github.com/tot0p/Hackaton-25-Back/internal/api/handlers"
 )
 
-func (api *Api) RegisterHandlers() {
+func (api *Api) RegisterHandlers(urlApi string) {
 	// public routes
 	api.app.Get("/ping", handlers.PingHandler())
 	api.app.Post("/user", handlers.CreateUserHandler(api.db, api.cert))
@@ -25,5 +25,6 @@ func (api *Api) RegisterHandlers() {
 	api.app.Get("/profile", handlers.ProfileHandler(api.db))
 	api.app.Post("/travels", handlers.AddTravelsHandler(api.db))
 	api.app.Get("/travels", handlers.GetTravelsHandler(api.db))
+	api.app.Post("/CalculateCO2", handlers.GetCalculC02Handler(urlApi))
 
 }

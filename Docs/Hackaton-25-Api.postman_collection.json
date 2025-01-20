@@ -119,7 +119,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyVVVJRCI6IjFlYjUyNThiLTczYzUtNGQ1Ni1iOGI3LWEyODNjMWQ4NDA0ZiIsIlVzZXJuYW1lIjoidGVzdCIsImV4cCI6MTczNzY2MDE4NX0.Xbn-aZ54NMnsuhV91ctglzVL3t6riYbmB6Rn-wzI3pq3nnHvljRuSJ8rWuhyR64-vhqIs-2MLAbp6AMOjTO0A8TxYwUa48vUPBuaqInAltnzwMUgGFakm1aZlP4Nzd2pct030ASBTKd7_INt90s-_iYW-CtvQfUmcQFEqn8iEN8cFkEDWOS7yQ04oDn917uE0Y_XTvN8hFztCOJot80F9ClGKZA5Dr6BHPRcyO3Zvcp-A-8BSzq2lQLZi5E8az0D7CrrRCvoFg3kFOi0BOtzmHmYln9xPE3AchtblZTQMscBzYN_fgsyxDiHbiXtp_OLz1MxvMsdPuBXbuZzIwCNnQ",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyVVVJRCI6IjlhMDk3M2ExLTYwMjAtNDljMC04OWM5LTRlMDFmYjA5NGZhMyIsIlVzZXJuYW1lIjoidGVzdCIsImV4cCI6MTczNzY2MjIzOX0.NwJNaC9HohozMfm3cDi77ClL4fASC0xlFMPwDt_pRWxJzmXn-ywayGSA8EHGwu0rtctvqw8z91tIHq0MPsL6vqdrYm_piycTtC479UWqy9ts9kbXWn08OeE4DYtQNNycRJNkx_wTZfko21koVhQ5IOo0LQ0bELKoymSgmRdI87GiEC6N1pw0rXzrnrEMVNn8Q9Rztff4h853cxQI8iuIr5fEDWSdWqeDaS6fuiSvKEwBTbkyIiyYb0JyOpV4SQYupzOoU07vkUD2DyDzQkaU43Hp8dp8ADRjCYxEcooz2SohZ5rMq0nfZpMURolF4So2roSbzshKWqQsF74ivCFO9g",
 							"type": "string"
 						}
 					]
@@ -157,7 +157,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyVVVJRCI6IjFlYjUyNThiLTczYzUtNGQ1Ni1iOGI3LWEyODNjMWQ4NDA0ZiIsIlVzZXJuYW1lIjoidGVzdCIsImV4cCI6MTczNzY2MDQwMn0.nlxCGyGUMdzzR42M8fXM95n0VfvlkHkt4hqmwPOnmtORuS5S8wYhch-6zpJnmiylRR1SpxilJmOcf4t3SHLYimVFAhLl_twbrAczpa4dSK3pQK8di43inLSFGUiMBXGuIg54_sad_uQzD3M_L6E_aXAsni4RWSjyZKvJeqVBkbAQV_gn3NUO8TKsoUF1VfpD86NQOVImEhGr9-ZBFDJxNBmbetq99AihD3NCI9yO8Wkrle_F84mn8dYy8eviK6xiyGnWJ-jBlAUU9cp0d6uCmFaZxZ88evt3Fxnmhf52GS36VP2FGlj3WvR4YJ5T8WqcQvCifUwUnrCnRKVXMe9iKQ",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyVVVJRCI6IjlhMDk3M2ExLTYwMjAtNDljMC04OWM5LTRlMDFmYjA5NGZhMyIsIlVzZXJuYW1lIjoidGVzdCIsImV4cCI6MTczNzY2MjMzNX0.BJOEX7s6KnlhWwxLkTk1LMUZhjpyTtkUXoLDk2xAuWo5Wgl8Nibwi0NazAhZZNk5mp9hL3WKqAA6BndWMt8k9nwfWINRpbRofBNRWNFTkJ4w6CdFcaVHxwm-JMz9Dw75YUtNp6ihOPjkbK2jC7dsztHKIndEit_r29kEUIPU_Zu1eT7FNdqSkkRqd0eXInhroUbqMb9ILGYZHDVNVZI871wBreQ2sruhFotsxlxH1UTMZ-8PGt36jYA8v77ZWXmB47eD3oHWfoyHu_quXNIJE6JXVxVj9Sq_qFjkjMaZbmKPLTGF1Z2bxdELdzl0qAQO6I-FO84IiDUWpd0KTQlZbg",
 							"type": "string"
 						}
 					]
@@ -173,6 +173,44 @@
 					"port": "8080",
 					"path": [
 						"travels"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CalculateCO2",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyVVVJRCI6IjlhMDk3M2ExLTYwMjAtNDljMC04OWM5LTRlMDFmYjA5NGZhMyIsIlVzZXJuYW1lIjoidGVzdCIsImV4cCI6MTczNzY2NzA3MX0.MpJhzR40ccPxK3aeWrkNnIL3sY1s4HYv0w2P0TXTLGAmfDUKm9eHmVob7-ugvz8yThYZRAA_q6L75I78UaGXFDEU8wGdWloyGD0yRLwktLO4oyq3GnV9-cOqEbnbjtNEhbmTh1riMf17g7U2Z81zWl3NXUSnPM9YC89uV_5W619c98MrM_XOwLWsOJ7W3oQxmXthluJSfVgn_t1LhXdBArgUXZvR9VtSA2JQmUu7RfhiFUP11gQCkIvrO5octr6l-HCENOKUFrQxnudolR6kX3NfPdk8WjL630tKESFsYrxaL3FmEXHU6eBgqIhOK3rjylFPkUjwiukewTNic9a7Aw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"itinerary\": [\r\n        {\r\n            \"lat\": 48.8566,\r\n            \"lng\": 2.3522\r\n        },\r\n        {\r\n            \"lat\": 41.9028,\r\n            \"lng\": 12.4964\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/CalculateCO2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"CalculateCO2"
 					]
 				}
 			},
