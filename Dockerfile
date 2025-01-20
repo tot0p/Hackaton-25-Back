@@ -25,7 +25,6 @@ RUN go build -o main main.go
 
 EXPOSE 8080
 
-RUN cat /app/.env
 
 RUN cd /app
 RUN rm -rf /app/temp
