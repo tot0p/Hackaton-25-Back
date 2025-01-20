@@ -45,3 +45,12 @@ func (db *DBManager) Login(username, password, plateform string) (DBModels.Sessi
 	}
 	return session, true, nil
 }
+
+func (db *DBManager) GetUserByUUID(UUID string) (DBModels.User, error) {
+	var user DBModels.User
+	err := db.db.QueryRow("SELECT uuid, username FROM users WHERE uuid = ?", UUID).Scan(&user.UUID, &user.Username)
+	if err != nil {
+		return DBModels.User{}, err
+	}
+	return user, nil
+}
