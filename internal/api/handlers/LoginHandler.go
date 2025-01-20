@@ -7,6 +7,7 @@ import (
 	"github.com/tot0p/Hackaton-25-Back/internal/DBManager"
 	"github.com/tot0p/Hackaton-25-Back/internal/models/APIInput"
 	"github.com/tot0p/Hackaton-25-Back/internal/utils"
+	"time"
 )
 
 func LoginHandler(db *DBManager.DBManager, cert *rsa.PrivateKey) func(c *fiber.Ctx) error {
@@ -30,26 +31,12 @@ func LoginHandler(db *DBManager.DBManager, cert *rsa.PrivateKey) func(c *fiber.C
 			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Invalid password"})
 		}
 
-		prevToken, err := db.JWTGetByUserUUIDIfNotExpired(user.UUID)
-		if err != nil {
-			return err
-		}
-
-		if prevToken != "" {
-			return c.JSON(fiber.Map{"token": prevToken})
-		}
-
 		exp := utils.GetExp()
 		token, err := utils.CreateTokenJWT(*user, cert, exp)
 		if err != nil {
 			return err
 		}
 
-		err = db.JWTRegister(user.UUID, token, exp)
-		if err != nil {
-			return err
-		}
-
-		return c.JSON(fiber.Map{"token": token, "exp": exp})
+		return c.JSON(fiber.Map{"token": token, "exp": exp - time.Now().Unix()})
 	}
 }
