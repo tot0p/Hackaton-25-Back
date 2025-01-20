@@ -8,6 +8,9 @@
 	"item": [
 		{
 			"name": "Ping",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -31,7 +34,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"test\",\r\n    \"password\": \"test\"\r\n}",
+					"raw": "{\r\n    \"username\": \"test3\",\r\n    \"password\": \"test\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -58,7 +61,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\":\"test\",\r\n    \"password\":\"fzdjzd\",\r\n    \"device\":\"android\"\r\n}",
+					"raw": "{\r\n    \"username\":\"test2\",\r\n    \"password\":\"test\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -74,6 +77,35 @@
 					"port": "8080",
 					"path": [
 						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Profile",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyVVVJRCI6IjkzOTdlYzNhLTM5ZWYtNDFjMS04YmQ2LTZhOWRmY2RmZjM0MCIsIlVzZXJuYW1lIjoidGVzdDMiLCJleHAiOjE3Mzc2NTEwMjF9.LE9JUctMclu0F6phsJxZ1kPbz50C8kp-RtjmwjEAfuJ-1zRoVcU9Hj7RiD74bp2ZBcU-Iq0o4Fwhz5RcdQxKfwNsHHwNMc23RiSvMt5Y65lmmz-Gv96FM7qM6Y369gqZrLVQl6QUZBNNgnWVYZZ6mzOO_QF6HAwC4mpFk-DjmENqJMfYaYykw_LaYROf4BXEbwQVWEn5unsymgHsRpXFEQL2QjAL7y3t9_tI7ivPVnU5jgenvVe0mbzZmyAfhT4mZwro7twgB0O-s_JoX1gkTa_b44ocQEAe13rMicvW7Y8H9bit0SKF2WkDI1bW7T4XvLsQjb9nP_wyvmy-Tj2K6g",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/profile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"profile"
 					]
 				}
 			},

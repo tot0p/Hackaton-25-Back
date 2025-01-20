@@ -60,7 +60,7 @@ Create a new user
 **Content** :
 ```json
 {
-  "message": "User created"
+  "token": "jwt token"
 }
 ```
 
@@ -114,9 +114,7 @@ Login with a user
 **Content** :
 ```json
 {
-    "token": "1e6397b5-3bf2-4f89-bbba-XXXXXXXXXXXX",
-    "username": "test",
-    "device": "phone"
+    "token": "jwt token"
 }
 ```
 

@@ -1,13 +1,14 @@
 package handlers
 
 import (
+	"crypto/rsa"
 	"github.com/gofiber/fiber/v2"
 	"github.com/tot0p/Hackaton-25-Back/internal/DBManager"
 	"github.com/tot0p/Hackaton-25-Back/internal/models/APIInput"
 	"github.com/tot0p/Hackaton-25-Back/internal/utils"
 )
 
-func CreateUserHandler(db *DBManager.DBManager) func(c *fiber.Ctx) error {
+func CreateUserHandler(db *DBManager.DBManager, cert *rsa.PrivateKey) func(c *fiber.Ctx) error {
 	return func(c *fiber.Ctx) error {
 		//Parse body into struct
 		var Input APIInput.CreateUser
@@ -38,6 +39,15 @@ func CreateUserHandler(db *DBManager.DBManager) func(c *fiber.Ctx) error {
 		if err != nil {
 			return err
 		}
-		return c.Status(fiber.StatusCreated).JSON(fiber.Map{"message": "User created"})
+
+		// Get user by UUID
+		user, err := db.GetUserByUsername(Input.Username)
+		if err != nil {
+			return err
+		}
+
+		token, err := utils.CreateTokenJWT(*user, cert)
+
+		return c.Status(fiber.StatusCreated).JSON(fiber.Map{"token": token})
 	}
 }

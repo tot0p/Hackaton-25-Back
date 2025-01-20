@@ -3,7 +3,6 @@ package api
 import (
 	"crypto/rand"
 	"crypto/rsa"
-	jwtware "github.com/gofiber/contrib/jwt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/log"
 	"github.com/gofiber/fiber/v2/middleware/cors"
@@ -14,11 +13,10 @@ import (
 )
 
 type Api struct {
-	db     *DBManager.DBManager
-	app    *fiber.App
-	port   string
-	cert   *rsa.PrivateKey
-	secure fiber.Handler
+	db   *DBManager.DBManager
+	app  *fiber.App
+	port string
+	cert *rsa.PrivateKey
 }
 
 func (api *Api) Start() {
@@ -60,10 +58,5 @@ func InitApi(port, filename string) *Api {
 	if err != nil {
 		log.Fatalf("rsa.GenerateKey: %v", err)
 	}
-	secure := jwtware.New(jwtware.Config{
-		SigningKey: jwtware.SigningKey{
-			JWTAlg: jwtware.RS256,
-			Key:    cert.Public(),
-		}})
-	return &Api{db: DBManager.NewDBManager(filename), app: app, port: port, cert: cert, secure: secure}
+	return &Api{db: DBManager.NewDBManager(filename), app: app, port: port, cert: cert}
 }

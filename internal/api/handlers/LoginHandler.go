@@ -5,11 +5,9 @@ import (
 	"crypto/rsa"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/log"
-	"github.com/golang-jwt/jwt/v5"
 	"github.com/tot0p/Hackaton-25-Back/internal/DBManager"
 	"github.com/tot0p/Hackaton-25-Back/internal/models/APIInput"
 	"github.com/tot0p/Hackaton-25-Back/internal/utils"
-	"time"
 )
 
 func LoginHandler(db *DBManager.DBManager, cert *rsa.PrivateKey) func(c *fiber.Ctx) error {
@@ -33,20 +31,12 @@ func LoginHandler(db *DBManager.DBManager, cert *rsa.PrivateKey) func(c *fiber.C
 			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Invalid password"})
 		}
 
-		// Create the Claims
-		claims := jwt.MapClaims{
-			"UserUUID": user.UUID,
-			"Username": user.Username,
-			"exp":      time.Now().Add(time.Hour * 72).Unix(),
-		}
+		token, err := utils.CreateTokenJWT(*user, cert)
 
-		token := jwt.NewWithClaims(jwt.SigningMethodRS256, claims)
-
-		tokenString, err := token.SignedString(cert)
 		if err != nil {
 			log.Errorf("token.SignedString: %v", err)
 			return err
 		}
-		return c.JSON(fiber.Map{"token": tokenString})
+		return c.JSON(fiber.Map{"token": token})
 	}
 }
