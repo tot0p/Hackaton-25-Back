@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/log"
 	"github.com/tot0p/Hackaton-25-Back/internal/DBManager"
 	"github.com/tot0p/Hackaton-25-Back/internal/models/APIInput"
 	"github.com/tot0p/Hackaton-25-Back/internal/models/DBModels"
@@ -14,7 +15,8 @@ func AddTravelsHandler(db *DBManager.DBManager) func(c *fiber.Ctx) error {
 		var Input APIInput.Travel
 		err := c.BodyParser(&Input)
 		if err != nil {
-			return err
+			log.Errorw("Error parsing body", "error", err)
+			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid body"})
 		}
 
 		travel := DBModels.Travel{
@@ -28,9 +30,9 @@ func AddTravelsHandler(db *DBManager.DBManager) func(c *fiber.Ctx) error {
 		}
 		err = db.AddTravel(travel)
 		if err != nil {
-			return err
+			log.Errorw("Error adding travel", "error", err)
+			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Internal server error"})
 		}
-
 		return c.JSON(fiber.Map{"message": "Travel added"})
 	}
 }
