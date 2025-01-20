@@ -3,7 +3,6 @@ package DBManager
 import (
 	"database/sql"
 	"errors"
-	"fmt"
 	"github.com/google/uuid"
 	"time"
 )
