@@ -1,6 +1,10 @@
 package DBManager
 
-import "github.com/google/uuid"
+import (
+	"github.com/google/uuid"
+	"github.com/tot0p/Hackaton-25-Back/internal/models/DBModels"
+	"github.com/tot0p/Hackaton-25-Back/internal/utils"
+)
 
 func (db *DBManager) CheckIfUserExist(username string) (bool, error) {
 	var count int
@@ -18,4 +22,26 @@ func (db *DBManager) CreateUser(username string, password string) error {
 		return err
 	}
 	return nil
+}
+
+func (db *DBManager) Login(username, password, plateform string) (DBModels.Session, bool, error) {
+	var session DBModels.Session
+	var User DBModels.User
+	err := db.db.QueryRow("SELECT uuid, username, password FROM users WHERE username = ?", username).Scan(&User.UUID, &User.Username, &User.Password)
+	if err != nil {
+		return DBModels.Session{}, false, err
+	}
+	ok := utils.CheckPasswordHash(password, User.Password)
+	if !ok {
+		return DBModels.Session{}, false, nil
+	}
+
+	session.UUID = uuid.New().String()
+	session.UserUUID = User.UUID
+	session.Device = plateform
+	_, err = db.db.Exec("INSERT INTO sessions (uuid, userUUID, device) VALUES (?,?, ?)", session.UUID, session.UserUUID, session.Device)
+	if err != nil {
+		return DBModels.Session{}, false, err
+	}
+	return session, true, nil
 }
