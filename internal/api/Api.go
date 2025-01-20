@@ -1,7 +1,11 @@
 package api
 
 import (
+	"crypto/rand"
+	"crypto/rsa"
+	jwtware "github.com/gofiber/contrib/jwt"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/log"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/limiter"
 	"github.com/gofiber/fiber/v2/middleware/logger"
@@ -10,9 +14,11 @@ import (
 )
 
 type Api struct {
-	db   *DBManager.DBManager
-	app  *fiber.App
-	port string
+	db     *DBManager.DBManager
+	app    *fiber.App
+	port   string
+	cert   *rsa.PrivateKey
+	secure fiber.Handler
 }
 
 func (api *Api) Start() {
@@ -27,17 +33,14 @@ func (api *Api) Start() {
 
 func InitApi(port, filename string) *Api {
 	app := fiber.New()
-
 	app.Use(logger.New(logger.Config{
 		Format:     "[${time}] ${status} - ${method} ${path}\n",
 		TimeFormat: "02-Jan-2006 15:04:05",
 		TimeZone:   "Local",
 	}))
-
 	app.Use(cors.New(cors.Config{
 		AllowOrigins: "*",
 	}))
-
 	app.Use(limiter.New(limiter.Config{
 		Next: func(c *fiber.Ctx) bool {
 			return c.IP() == "127.0.0.1"
@@ -51,5 +54,16 @@ func InitApi(port, filename string) *Api {
 			return c.Status(fiber.StatusTooManyRequests).SendString("{\"error\": \"Too many requests\"}")
 		},
 	}))
-	return &Api{db: DBManager.NewDBManager(filename), app: app, port: port}
+	rng := rand.Reader
+	var err error
+	cert, err := rsa.GenerateKey(rng, 2048)
+	if err != nil {
+		log.Fatalf("rsa.GenerateKey: %v", err)
+	}
+	secure := jwtware.New(jwtware.Config{
+		SigningKey: jwtware.SigningKey{
+			JWTAlg: jwtware.RS256,
+			Key:    cert.Public(),
+		}})
+	return &Api{db: DBManager.NewDBManager(filename), app: app, port: port, cert: cert, secure: secure}
 }

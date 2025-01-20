@@ -5,7 +5,6 @@ import (
 	"errors"
 	"github.com/google/uuid"
 	"github.com/tot0p/Hackaton-25-Back/internal/models/DBModels"
-	"github.com/tot0p/Hackaton-25-Back/internal/utils"
 )
 
 func (db *DBManager) CheckIfUserExist(username string) (bool, error) {
@@ -26,31 +25,6 @@ func (db *DBManager) CreateUser(username string, password string) error {
 	return nil
 }
 
-func (db *DBManager) Login(username, password, plateform string) (DBModels.Session, bool, error) {
-	var session DBModels.Session
-	var User DBModels.User
-	err := db.db.QueryRow("SELECT uuid, username, password FROM users WHERE username = ?", username).Scan(&User.UUID, &User.Username, &User.Password)
-	if err != nil {
-		if errors.Is(err, sql.ErrNoRows) {
-			return DBModels.Session{}, false, nil
-		}
-		return DBModels.Session{}, false, err
-	}
-	ok := utils.CheckPasswordHash(password, User.Password)
-	if !ok {
-		return DBModels.Session{}, false, nil
-	}
-
-	session.UUID = uuid.New().String()
-	session.UserUUID = User.UUID
-	session.Device = plateform
-	_, err = db.db.Exec("INSERT INTO sessions (uuid, userUUID, device) VALUES (?,?, ?)", session.UUID, session.UserUUID, session.Device)
-	if err != nil {
-		return DBModels.Session{}, false, err
-	}
-	return session, true, nil
-}
-
 func (db *DBManager) GetUserByUUID(UUID string) (DBModels.User, error) {
 	var user DBModels.User
 	err := db.db.QueryRow("SELECT uuid, username FROM users WHERE uuid = ?", UUID).Scan(&user.UUID, &user.Username)
@@ -58,4 +32,28 @@ func (db *DBManager) GetUserByUUID(UUID string) (DBModels.User, error) {
 		return DBModels.User{}, err
 	}
 	return user, nil
+}
+
+func (db *DBManager) GetUserByUsernameWithPass(username string) (*DBModels.User, error) {
+	var user DBModels.User
+	err := db.db.QueryRow("SELECT uuid, username ,password FROM users WHERE username = ?", username).Scan(&user.UUID, &user.Username, &user.Password)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, nil
+		}
+		return nil, err
+	}
+	return &user, nil
+}
+
+func (db *DBManager) GetUserByUsername(username string) (*DBModels.User, error) {
+	var user DBModels.User
+	err := db.db.QueryRow("SELECT uuid, username FROM users WHERE username = ?", username).Scan(&user.UUID, &user.Username)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, nil
+		}
+		return nil, err
+	}
+	return &user, nil
 }

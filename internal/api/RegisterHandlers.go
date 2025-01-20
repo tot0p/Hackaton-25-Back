@@ -7,5 +7,8 @@ import (
 func (api *Api) RegisterHandlers() {
 	api.app.Get("/ping", handlers.PingHandler())
 	api.app.Post("/user", handlers.CreateUserHandler(api.db))
-	api.app.Post("/login", handlers.LoginHandler(api.db))
+	api.app.Post("/login", handlers.LoginHandler(api.db, api.cert))
+
+	api.app.Get("/profile", handlers.ProfileHandler(api.db))
+
 }
