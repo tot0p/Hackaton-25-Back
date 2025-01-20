@@ -23,5 +23,7 @@ func (api *Api) RegisterHandlers() {
 		},
 	}))
 	api.app.Get("/profile", handlers.ProfileHandler(api.db))
+	api.app.Post("/travels", handlers.AddTravelsHandler(api.db))
+	api.app.Get("/travels", handlers.GetTravelsHandler(api.db))
 
 }

@@ -34,7 +34,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"test3\",\r\n    \"password\": \"test\"\r\n}",
+					"raw": "{\r\n    \"username\": \"test2\",\r\n    \"password\": \"test\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -61,7 +61,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\":\"test2\",\r\n    \"password\":\"test\"\r\n}",
+					"raw": "{\r\n    \"username\":\"test\",\r\n    \"password\":\"test\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -90,7 +90,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyVVVJRCI6IjkzOTdlYzNhLTM5ZWYtNDFjMS04YmQ2LTZhOWRmY2RmZjM0MCIsIlVzZXJuYW1lIjoidGVzdDMiLCJleHAiOjE3Mzc2NTEwMjF9.LE9JUctMclu0F6phsJxZ1kPbz50C8kp-RtjmwjEAfuJ-1zRoVcU9Hj7RiD74bp2ZBcU-Iq0o4Fwhz5RcdQxKfwNsHHwNMc23RiSvMt5Y65lmmz-Gv96FM7qM6Y369gqZrLVQl6QUZBNNgnWVYZZ6mzOO_QF6HAwC4mpFk-DjmENqJMfYaYykw_LaYROf4BXEbwQVWEn5unsymgHsRpXFEQL2QjAL7y3t9_tI7ivPVnU5jgenvVe0mbzZmyAfhT4mZwro7twgB0O-s_JoX1gkTa_b44ocQEAe13rMicvW7Y8H9bit0SKF2WkDI1bW7T4XvLsQjb9nP_wyvmy-Tj2K6g",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyVVVJRCI6ImU3NTc3ZDNmLTg0YjMtNGU0Ny1hZGFmLWEzZDNhOTQ1ZDE4ZSIsIlVzZXJuYW1lIjoidGVzdCIsImV4cCI6MTczNzY1MjMyOH0.Whs3Uh_boGC3AA86fdcudTYcWhqWfc76t4NVbHYrFhNVvXdW4sbkhIV3vyY7CH15mjMpR_8679CFZQhWxhXDJqbdNIZt3ue3otlh7BqworbzSRt1BQaL3jIUVib8prPGL4UKCumyZ6uRXW9cRyRcqmdvlNNz30bUGOs20UJ0b1ADY_lO0qgGq5wKsnnSocuFrc8gWti_wkgdgxpSc8jtbrsfamc3X2izz1OWp-ur3-cBrMEmukkDY0IumdtqJ2taffiqsLvR7dyFwiFR1OvxwkOFkc0cVtEI4ZvBIQ8NvMnscIvenPjucRBDgffE48uwaNX-6kwOBJMSftMWQHAmLA",
 							"type": "string"
 						}
 					]
@@ -106,6 +106,73 @@
 					"port": "8080",
 					"path": [
 						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Travel",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyVVVJRCI6IjFlYjUyNThiLTczYzUtNGQ1Ni1iOGI3LWEyODNjMWQ4NDA0ZiIsIlVzZXJuYW1lIjoidGVzdCIsImV4cCI6MTczNzY2MDE4NX0.Xbn-aZ54NMnsuhV91ctglzVL3t6riYbmB6Rn-wzI3pq3nnHvljRuSJ8rWuhyR64-vhqIs-2MLAbp6AMOjTO0A8TxYwUa48vUPBuaqInAltnzwMUgGFakm1aZlP4Nzd2pct030ASBTKd7_INt90s-_iYW-CtvQfUmcQFEqn8iEN8cFkEDWOS7yQ04oDn917uE0Y_XTvN8hFztCOJot80F9ClGKZA5Dr6BHPRcyO3Zvcp-A-8BSzq2lQLZi5E8az0D7CrrRCvoFg3kFOi0BOtzmHmYln9xPE3AchtblZTQMscBzYN_fgsyxDiHbiXtp_OLz1MxvMsdPuBXbuZzIwCNnQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"startLocation\":\"Paris\",\r\n    \"endLocation\" : \"Madrid\",\r\n    \"distance\":30004,\r\n    \"duration\":3000,\r\n    \"CO2\":405.4,\r\n    \"TransportType\":\"Voiture\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/travels",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"travels"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ListTravels",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyVVVJRCI6IjFlYjUyNThiLTczYzUtNGQ1Ni1iOGI3LWEyODNjMWQ4NDA0ZiIsIlVzZXJuYW1lIjoidGVzdCIsImV4cCI6MTczNzY2MDQwMn0.nlxCGyGUMdzzR42M8fXM95n0VfvlkHkt4hqmwPOnmtORuS5S8wYhch-6zpJnmiylRR1SpxilJmOcf4t3SHLYimVFAhLl_twbrAczpa4dSK3pQK8di43inLSFGUiMBXGuIg54_sad_uQzD3M_L6E_aXAsni4RWSjyZKvJeqVBkbAQV_gn3NUO8TKsoUF1VfpD86NQOVImEhGr9-ZBFDJxNBmbetq99AihD3NCI9yO8Wkrle_F84mn8dYy8eviK6xiyGnWJ-jBlAUU9cp0d6uCmFaZxZ88evt3Fxnmhf52GS36VP2FGlj3WvR4YJ5T8WqcQvCifUwUnrCnRKVXMe9iKQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/travels",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"travels"
 					]
 				}
 			},
