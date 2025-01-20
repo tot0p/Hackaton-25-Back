@@ -3,6 +3,7 @@ package DBManager
 import (
 	"database/sql"
 	"errors"
+	"fmt"
 	"github.com/google/uuid"
 	"time"
 )
@@ -19,10 +20,11 @@ func (db *DBManager) JWTGetByUserUUIDIfNotExpired(userUUID string) (string, erro
 	err := db.db.QueryRow("SELECT token FROM JWT WHERE userUUID = ? AND ExpiresAt > ?", userUUID, exp).Scan(&token)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
-			_, err = db.db.Exec("DELETE FROM JWT WHERE ExpiresAt < ?", exp)
+			_, err = db.db.Exec("DELETE FROM JWT WHERE ExpiresAt <= ?", exp)
 			if err != nil {
 				return "", err
 			}
+			return "", nil
 		}
 		return "", err
 	}

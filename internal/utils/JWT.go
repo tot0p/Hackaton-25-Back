@@ -5,6 +5,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/tot0p/Hackaton-25-Back/internal/models/DBModels"
+	"time"
 )
 
 func LoadUserJWT(c *fiber.Ctx) DBModels.User {
@@ -29,4 +30,8 @@ func CreateTokenJWT(user DBModels.User, cert *rsa.PrivateKey, exp int64) (string
 
 	return token.SignedString(cert)
 
+}
+
+func GetExp() int64 {
+	return time.Now().Add(time.Hour * 72).Unix()
 }

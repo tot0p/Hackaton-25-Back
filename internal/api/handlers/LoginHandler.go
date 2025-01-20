@@ -7,7 +7,6 @@ import (
 	"github.com/tot0p/Hackaton-25-Back/internal/DBManager"
 	"github.com/tot0p/Hackaton-25-Back/internal/models/APIInput"
 	"github.com/tot0p/Hackaton-25-Back/internal/utils"
-	"time"
 )
 
 func LoginHandler(db *DBManager.DBManager, cert *rsa.PrivateKey) func(c *fiber.Ctx) error {
@@ -40,7 +39,7 @@ func LoginHandler(db *DBManager.DBManager, cert *rsa.PrivateKey) func(c *fiber.C
 			return c.JSON(fiber.Map{"token": prevToken})
 		}
 
-		exp := time.Now().Add(time.Hour * 72).Unix()
+		exp := utils.GetExp()
 		token, err := utils.CreateTokenJWT(*user, cert, exp)
 		if err != nil {
 			return err

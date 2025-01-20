@@ -6,7 +6,6 @@ import (
 	"github.com/tot0p/Hackaton-25-Back/internal/DBManager"
 	"github.com/tot0p/Hackaton-25-Back/internal/models/APIInput"
 	"github.com/tot0p/Hackaton-25-Back/internal/utils"
-	"time"
 )
 
 func CreateUserHandler(db *DBManager.DBManager, cert *rsa.PrivateKey) func(c *fiber.Ctx) error {
@@ -46,7 +45,7 @@ func CreateUserHandler(db *DBManager.DBManager, cert *rsa.PrivateKey) func(c *fi
 		if err != nil {
 			return err
 		}
-		exp := time.Now().Add(time.Hour * 72).Unix()
+		exp := utils.GetExp()
 		token, err := utils.CreateTokenJWT(*user, cert, exp)
 		if err != nil {
 			return err
