@@ -2,22 +2,21 @@ package api
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/cache"
 	"github.com/gofiber/fiber/v2/middleware/limiter"
 	"github.com/gofiber/fiber/v2/middleware/logger"
-	"github.com/gofiber/fiber/v2/utils"
-	"github.com/tot0p/Hackaton-25-Back/internal/db"
-	"strconv"
+	"github.com/tot0p/Hackaton-25-Back/internal/DBManager"
 	"time"
 )
 
 type Api struct {
-	db   *db.Database
+	db   *DBManager.DBManager
 	app  *fiber.App
 	port string
 }
 
 func (api *Api) Start() {
+	api.db.Open()
+	api.db.Init()
 	defer api.db.Close()
 	err := api.app.Listen(api.port)
 	if err != nil {
@@ -47,16 +46,5 @@ func InitApi(port, filename string) *Api {
 			return c.Status(fiber.StatusTooManyRequests).SendString("{\"error\": \"Too many requests\"}")
 		},
 	}))
-
-	app.Use(cache.New(cache.Config{
-		ExpirationGenerator: func(c *fiber.Ctx, cfg *cache.Config) time.Duration {
-			newCacheTime, _ := strconv.Atoi(c.GetRespHeader("Cache-Time", "0"))
-			return time.Second * time.Duration(newCacheTime)
-		},
-		KeyGenerator: func(c *fiber.Ctx) string {
-			return utils.CopyString(c.OriginalURL())
-		},
-	}))
-
-	return &Api{db: db.CreateDatabase(filename), app: app, port: port}
+	return &Api{db: DBManager.NewDBManager(filename), app: app, port: port}
 }
