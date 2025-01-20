@@ -4,10 +4,10 @@ import "C"
 import (
 	"crypto/rsa"
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/log"
 	"github.com/tot0p/Hackaton-25-Back/internal/DBManager"
 	"github.com/tot0p/Hackaton-25-Back/internal/models/APIInput"
 	"github.com/tot0p/Hackaton-25-Back/internal/utils"
+	"time"
 )
 
 func LoginHandler(db *DBManager.DBManager, cert *rsa.PrivateKey) func(c *fiber.Ctx) error {
@@ -31,12 +31,26 @@ func LoginHandler(db *DBManager.DBManager, cert *rsa.PrivateKey) func(c *fiber.C
 			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Invalid password"})
 		}
 
-		token, err := utils.CreateTokenJWT(*user, cert)
-
+		prevToken, err := db.JWTGetByUserUUIDIfNotExpired(user.UUID)
 		if err != nil {
-			log.Errorf("token.SignedString: %v", err)
 			return err
 		}
-		return c.JSON(fiber.Map{"token": token})
+
+		if prevToken != "" {
+			return c.JSON(fiber.Map{"token": prevToken})
+		}
+
+		exp := time.Now().Add(time.Hour * 72).Unix()
+		token, err := utils.CreateTokenJWT(*user, cert, exp)
+		if err != nil {
+			return err
+		}
+
+		err = db.JWTRegister(user.UUID, token, exp)
+		if err != nil {
+			return err
+		}
+
+		return c.JSON(fiber.Map{"token": token, "exp": exp})
 	}
 }
