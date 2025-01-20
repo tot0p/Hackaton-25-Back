@@ -38,7 +38,6 @@ func CreateUserHandler(db *DBManager.DBManager) func(c *fiber.Ctx) error {
 		if err != nil {
 			return err
 		}
-
-		return c.JSON(fiber.Map{"message": "User created"})
+		return c.Status(fiber.StatusCreated).JSON(fiber.Map{"message": "User created"})
 	}
 }

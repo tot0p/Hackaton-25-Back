@@ -22,14 +22,13 @@ func LoginHandler(db *DBManager.DBManager) func(c *fiber.Ctx) error {
 		if err != nil {
 			return err
 		} else if !ok {
-			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid password"})
+			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid password or username"})
 		}
 
 		var Output APIOutput.Login
 		Output.Username = Input.Username
 		Output.Device = Input.Device
 		Output.Token = session.UUID
-
 		return c.JSON(Output)
 	}
 }

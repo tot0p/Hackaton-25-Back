@@ -1,6 +1,8 @@
 package DBManager
 
 import (
+	"database/sql"
+	"errors"
 	"github.com/google/uuid"
 	"github.com/tot0p/Hackaton-25-Back/internal/models/DBModels"
 	"github.com/tot0p/Hackaton-25-Back/internal/utils"
@@ -29,6 +31,9 @@ func (db *DBManager) Login(username, password, plateform string) (DBModels.Sessi
 	var User DBModels.User
 	err := db.db.QueryRow("SELECT uuid, username, password FROM users WHERE username = ?", username).Scan(&User.UUID, &User.Username, &User.Password)
 	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return DBModels.Session{}, false, nil
+		}
 		return DBModels.Session{}, false, err
 	}
 	ok := utils.CheckPasswordHash(password, User.Password)
