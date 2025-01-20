@@ -5,6 +5,7 @@
 - [Ping](#ping)
 - [Create User](#create-user)
 - [Login](#login)
+- [profile](#profile)
 
 
 ## Ping
@@ -102,8 +103,7 @@ Login with a user
 ```json
 {
     "username": "user",
-    "password": "password",
-    "Device": "phone"
+    "password": "password"
 }
 ```
 
@@ -134,4 +134,34 @@ Login with a user
 **Code** : `500 INTERNAL SERVER ERROR`
 
 **Content** :
+plain text actually
+
+
+## profile
+
+Get user profile
+
+**URL** : `/profile`
+
+**Method** : `GET`
+
+**Headers** : `Authorization: Bearer
+
+**Success Response**
+
+**Code** : `200 OK`
+
+**Content** :
+```json
+{
+    "username": "test"
+}
+```
+
+**Error Response**
+
+**Code** : `401 UNAUTHORIZED`
+
+**Content** :
+
 plain text actually
