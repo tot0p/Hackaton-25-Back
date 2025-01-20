@@ -2,6 +2,7 @@ package api
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/limiter"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/tot0p/Hackaton-25-Back/internal/DBManager"
@@ -31,6 +32,10 @@ func InitApi(port, filename string) *Api {
 		Format:     "[${time}] ${status} - ${method} ${path}\n",
 		TimeFormat: "02-Jan-2006 15:04:05",
 		TimeZone:   "Local",
+	}))
+
+	app.Use(cors.New(cors.Config{
+		AllowOrigins: "*",
 	}))
 
 	app.Use(limiter.New(limiter.Config{
