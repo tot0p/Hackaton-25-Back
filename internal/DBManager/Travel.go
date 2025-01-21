@@ -3,6 +3,7 @@ package DBManager
 import (
 	"database/sql"
 	"errors"
+	"github.com/gofiber/fiber/v2/log"
 	"github.com/google/uuid"
 	"github.com/tot0p/Hackaton-25-Back/internal/models/DBModels"
 )
@@ -41,10 +42,8 @@ func (db *DBManager) GetCO2OfMonth(userUUID string) (float64, error) {
 	var CO2 float64
 	err := db.db.QueryRow("SELECT SUM(CO2) FROM travels WHERE userUUID = ? AND strftime('%m',Date) = strftime('%m',CURRENT_DATE)", userUUID).Scan(&CO2)
 	if err != nil {
-		if errors.Is(err, sql.ErrNoRows) {
-			return 0, nil
-		}
-		return 0, err
+		log.Errorw("Error getting CO2 of month", "error", err)
+		return 0, nil
 	}
 	return CO2, nil
 }
