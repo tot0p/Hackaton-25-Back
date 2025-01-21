@@ -6,12 +6,15 @@ on:
       - "main"
 
 jobs:
-  build:
+  build-and-deploy:
     name: Build Docker image and push to Docker Hub
-    runs-on: ubuntu-latest # specify the build machine
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Create .env file
+        run: echo "PORT=8080" > .env && echo "DB_FILE_PATH=./db.db" >> .env && echo "URL_OF_API_CO2=http://localhost:8000" >> .env
 
       - name : Login to Docker Hub
         run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
@@ -21,5 +24,7 @@ jobs:
 
       - name: Push Docker image
         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/hackaton-25-back:latest
+
+
 
 
