@@ -24,3 +24,12 @@ URL_OF_API_CO2=http://localhost:8000
 1. Run `docker build -t hackaton-25-back .` to build the image
 2. Run `docker run -p 8080:8080 hackaton-25-back` to start the container
 3. Open your browser and go to `http://localhost:8080/ping` to see the server running
+
+## API Doc
+
+[API Doc](Docs/ApiDoc.md)
+
+
+## Authors
+
+- [Thomas Lemaitre](https://github.com/tot0p)
