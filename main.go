@@ -1,7 +1,9 @@
 package main
 
 import (
+	"github.com/gofiber/fiber/v2/log"
 	"github.com/tot0p/Hackaton-25-Back/internal/api"
+	"os"
 
 	"github.com/tot0p/env"
 )
@@ -24,7 +26,8 @@ func main() {
 	}
 	url := env.Get("URL_OF_API_CO2")
 	if url == "" {
-		url = "http://localhost:8000"
+		log.Fatal("URL_OF_API_CO2 is not set")
+		os.Exit(1)
 	}
 	Client := api.InitApi(port, filename)
 	Client.RegisterHandlers(url)
