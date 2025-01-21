@@ -9,7 +9,7 @@ require (
 	github.com/google/uuid v1.6.0
 	github.com/mattn/go-sqlite3 v1.14.24
 	github.com/tot0p/env v0.0.0-20240226095124-cafad61a96a3
-	golang.org/x/crypto v0.14.0
+	golang.org/x/crypto v0.31.0
 )
 
 require (
