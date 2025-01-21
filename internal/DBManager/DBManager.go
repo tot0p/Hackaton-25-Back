@@ -12,6 +12,7 @@ type DBManager struct {
 	tx       *sql.Tx
 }
 
+// Open opens the database
 func (db *DBManager) begin() error {
 	if db.tx == nil {
 		tx, err := db.db.Begin()
@@ -21,30 +22,6 @@ func (db *DBManager) begin() error {
 		db.tx = tx
 	}
 	return nil
-}
-
-func (db *DBManager) Commit() error {
-	if db.tx != nil {
-		err := db.tx.Commit()
-		if err != nil {
-			return err
-		}
-	}
-	return nil
-}
-
-func (db *DBManager) Rollback() error {
-	if db.tx != nil {
-		err := db.tx.Rollback()
-		if err != nil {
-			return err
-		}
-	}
-	return nil
-}
-
-func (db *DBManager) Validate() {
-	db.tx = nil
 }
 
 // NewDBManager creates a new DBManager

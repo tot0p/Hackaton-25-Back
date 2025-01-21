@@ -8,6 +8,7 @@ import (
 	"time"
 )
 
+// LoadUserJWT loads the user from the JWT token
 func LoadUserJWT(c *fiber.Ctx) DBModels.User {
 	// handle error
 	user := c.Locals("user").(*jwt.Token)
@@ -18,6 +19,7 @@ func LoadUserJWT(c *fiber.Ctx) DBModels.User {
 	return User
 }
 
+// CreateTokenJWT creates a JWT token
 func CreateTokenJWT(user DBModels.User, cert *rsa.PrivateKey, exp int64) (string, error) {
 	// Create the Claims
 	claims := jwt.MapClaims{
@@ -32,6 +34,7 @@ func CreateTokenJWT(user DBModels.User, cert *rsa.PrivateKey, exp int64) (string
 
 }
 
+// GetExp returns the expiration time of the token
 func GetExp() int64 {
 	return time.Now().Add(time.Hour * 72).Unix()
 }

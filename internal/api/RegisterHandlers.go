@@ -6,6 +6,7 @@ import (
 	"github.com/tot0p/Hackaton-25-Back/internal/api/handlers"
 )
 
+// RegisterHandlers register all handlers
 func (api *Api) RegisterHandlers(urlApi string) {
 	// public routes
 	api.app.Get("/ping", handlers.PingHandler())

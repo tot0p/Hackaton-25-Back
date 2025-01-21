@@ -10,6 +10,7 @@ import (
 	"time"
 )
 
+// CreateUserHandler create a user
 func CreateUserHandler(db *DBManager.DBManager, cert *rsa.PrivateKey) func(c *fiber.Ctx) error {
 	return func(c *fiber.Ctx) error {
 		//Parse body into struct

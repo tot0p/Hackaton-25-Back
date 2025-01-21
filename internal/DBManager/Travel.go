@@ -8,6 +8,7 @@ import (
 	"github.com/tot0p/Hackaton-25-Back/internal/models/DBModels"
 )
 
+// AddTravel adds a travel to the database
 func (db *DBManager) AddTravel(travel DBModels.Travel) error {
 	uuid := uuid.New().String()
 	_, err := db.db.Exec("INSERT INTO travels (UUID, userUUID , StartLocation, EndLocation, Distance , Duration , CO2 , TransportType ) VALUES (?,?,?,?,?,?,?,?)", uuid, travel.UserUUID, travel.StartLocation, travel.EndLocation, travel.Distance, travel.Duration, travel.CO2, travel.TransportType)
@@ -17,6 +18,7 @@ func (db *DBManager) AddTravel(travel DBModels.Travel) error {
 	return nil
 }
 
+// GetTravels returns the travels of the user
 func (db *DBManager) GetTravels(userUUID string) ([]DBModels.Travel, error) {
 	var travels []DBModels.Travel
 	rows, err := db.db.Query("SELECT UUID,Date, StartLocation, EndLocation, Distance , Duration , CO2 , TransportType FROM travels WHERE userUUID = ?", userUUID)
@@ -38,6 +40,7 @@ func (db *DBManager) GetTravels(userUUID string) ([]DBModels.Travel, error) {
 	return travels, nil
 }
 
+// GetCO2OfMonth returns the CO2 of the user of the current month
 func (db *DBManager) GetCO2OfMonth(userUUID string) (float64, error) {
 	var CO2 float64
 	err := db.db.QueryRow("SELECT SUM(CO2) FROM travels WHERE userUUID = ? AND strftime('%m',Date) = strftime('%m',CURRENT_DATE)", userUUID).Scan(&CO2)
@@ -48,6 +51,7 @@ func (db *DBManager) GetCO2OfMonth(userUUID string) (float64, error) {
 	return CO2, nil
 }
 
+// GetCO2OfPrevMonth returns the CO2 of the user of the previous month
 func (db *DBManager) GetCO2OfPrevMonth(userUUID string) (float64, error) {
 	var CO2 float64
 	err := db.db.QueryRow("SELECT SUM(CO2) FROM travels WHERE userUUID = ? AND CAST(strftime('%m',Date) AS INTEGER) = (CAST(strftime('%m',CURRENT_DATE) AS INTEGER) -1)", userUUID).Scan(&CO2)

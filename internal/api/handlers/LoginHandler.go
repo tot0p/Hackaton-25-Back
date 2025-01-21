@@ -11,6 +11,7 @@ import (
 	"time"
 )
 
+// LoginHandler returns a handler function that logs in the user
 func LoginHandler(db *DBManager.DBManager, cert *rsa.PrivateKey) func(c *fiber.Ctx) error {
 	return func(c *fiber.Ctx) error {
 		var Input APIInput.Login

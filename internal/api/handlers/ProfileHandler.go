@@ -7,6 +7,7 @@ import (
 	"github.com/tot0p/Hackaton-25-Back/internal/utils"
 )
 
+// ProfileHandler returns a handler function that returns the profile of the user
 func ProfileHandler(db *DBManager.DBManager) func(c *fiber.Ctx) error {
 	return func(c *fiber.Ctx) error {
 		// load user from token

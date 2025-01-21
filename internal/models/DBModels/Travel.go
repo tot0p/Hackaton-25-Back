@@ -1,5 +1,6 @@
 package DBModels
 
+// Travel represents a travel
 type Travel struct {
 	UUID          string  `json:"uuid"`
 	UserUUID      string  `json:"userUUID"`

@@ -12,6 +12,7 @@ import (
 	"time"
 )
 
+// Api is the main struct of the API
 type Api struct {
 	db   *DBManager.DBManager
 	app  *fiber.App
@@ -19,6 +20,7 @@ type Api struct {
 	cert *rsa.PrivateKey
 }
 
+// Start starts the API
 func (api *Api) Start() {
 	api.db.Open()
 	api.db.Init()
@@ -29,16 +31,22 @@ func (api *Api) Start() {
 	}
 }
 
+// InitApi creates a new Api object
 func InitApi(port, filename string) *Api {
 	app := fiber.New()
+	// add middleware to log requests
 	app.Use(logger.New(logger.Config{
 		Format:     "[${time}] ${status} - ${method} ${path}\n",
 		TimeFormat: "02-Jan-2006 15:04:05",
 		TimeZone:   "Local",
 	}))
+
+	// add middleware to allow CORS
 	app.Use(cors.New(cors.Config{
 		AllowOrigins: "*",
 	}))
+
+	// add middleware to limit the number of requests
 	app.Use(limiter.New(limiter.Config{
 		Next: func(c *fiber.Ctx) bool {
 			return c.IP() == "127.0.0.1"
@@ -52,6 +60,7 @@ func InitApi(port, filename string) *Api {
 			return c.Status(fiber.StatusTooManyRequests).SendString("{\"error\": \"Too many requests\"}")
 		},
 	}))
+	// generate RSA key
 	rng := rand.Reader
 	var err error
 	cert, err := rsa.GenerateKey(rng, 2048)

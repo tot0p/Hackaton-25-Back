@@ -9,6 +9,7 @@ import (
 	"github.com/tot0p/Hackaton-25-Back/internal/utils"
 )
 
+// AddTravelsHandler returns a handler function that adds a travel to the database
 func AddTravelsHandler(db *DBManager.DBManager) func(c *fiber.Ctx) error {
 	return func(c *fiber.Ctx) error {
 		user := utils.LoadUserJWT(c)

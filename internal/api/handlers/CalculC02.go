@@ -8,6 +8,7 @@ import (
 	"net/http"
 )
 
+// GetCalculC02Handler returns a handler that sends a request to the API and returns the response
 func GetCalculC02Handler(urlAPi string) func(c *fiber.Ctx) error {
 	return func(c *fiber.Ctx) error {
 		body := c.Body()

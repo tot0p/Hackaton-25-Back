@@ -1,5 +1,6 @@
 package APIInput
 
+// Travel represents the input for creating a travel
 type Travel struct {
 	StartLocation string  `json:"startLocation" xml:"startLocation" form:"startLocation"`
 	EndLocation   string  `json:"endLocation" xml:"endLocation" form:"endLocation"`

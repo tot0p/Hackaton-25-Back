@@ -7,6 +7,7 @@ import (
 	"github.com/tot0p/Hackaton-25-Back/internal/utils"
 )
 
+// GetTravelsHandler returns a handler function that returns the travels of the user
 func GetTravelsHandler(db *DBManager.DBManager) func(c *fiber.Ctx) error {
 	return func(c *fiber.Ctx) error {
 		user := utils.LoadUserJWT(c)
