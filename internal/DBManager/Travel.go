@@ -45,8 +45,10 @@ func (db *DBManager) GetCO2OfMonth(userUUID string) (float64, error) {
 	var CO2 float64
 	err := db.db.QueryRow("SELECT SUM(CO2) FROM travels WHERE userUUID = ? AND strftime('%m',Date) = strftime('%m',CURRENT_DATE)", userUUID).Scan(&CO2)
 	if err != nil {
-		log.Errorw("Error getting CO2 of month", "error", err)
-		return 0, nil
+		if err.Error() == "sql: Scan error on column index 0, name \"SUM(CO2)\": converting NULL to float64 is unsupported" {
+			return 0, nil
+		}
+		return 0, err
 	}
 	return CO2, nil
 }
@@ -56,7 +58,10 @@ func (db *DBManager) GetCO2OfPrevMonth(userUUID string) (float64, error) {
 	var CO2 float64
 	err := db.db.QueryRow("SELECT SUM(CO2) FROM travels WHERE userUUID = ? AND CAST(strftime('%m',Date) AS INTEGER) = (CAST(strftime('%m',CURRENT_DATE) AS INTEGER) -1)", userUUID).Scan(&CO2)
 	if err != nil {
-		return -1, nil
+		if err.Error() == "sql: Scan error on column index 0, name \"SUM(CO2)\": converting NULL to float64 is unsupported" {
+			return -1, nil
+		}
+		return -1, err
 	}
 	return CO2, nil
 }
