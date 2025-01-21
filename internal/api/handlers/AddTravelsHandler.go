@@ -34,6 +34,6 @@ func AddTravelsHandler(db *DBManager.DBManager) func(c *fiber.Ctx) error {
 			log.Errorw("Error adding travel", "error", err)
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Internal server error"})
 		}
-		return c.JSON(fiber.Map{"message": "Travel added"})
+		return c.Status(fiber.StatusCreated).JSON(fiber.Map{"message": "Travel added"})
 	}
 }
