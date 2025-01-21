@@ -3,7 +3,6 @@ package DBManager
 import (
 	"database/sql"
 	"errors"
-	"github.com/gofiber/fiber/v2/log"
 	"github.com/google/uuid"
 	"github.com/tot0p/Hackaton-25-Back/internal/models/DBModels"
 )
