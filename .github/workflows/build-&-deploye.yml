@@ -20,7 +20,7 @@ jobs:
         run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login ${{secrets.DOCKERHUB_TURL}} -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
       - name: Build Docker image
-        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/hackaton-25-back:latest .
+        run: docker build -t ${{ secrets.DOCKERHUB_TURL }}/hackaton-25-back:latest .
 
       - name: Push Docker image
         run: docker push ${{ secrets.DOCKERHUB_TURL }}/hackaton-25-back:latest
