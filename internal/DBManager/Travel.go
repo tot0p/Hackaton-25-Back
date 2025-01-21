@@ -36,3 +36,24 @@ func (db *DBManager) GetTravels(userUUID string) ([]DBModels.Travel, error) {
 	}
 	return travels, nil
 }
+
+func (db *DBManager) GetCO2OfMonth(userUUID string) (float64, error) {
+	var CO2 float64
+	err := db.db.QueryRow("SELECT SUM(CO2) FROM travels WHERE userUUID = ? AND strftime('%m',Date) = strftime('%m',CURRENT_DATE)", userUUID).Scan(&CO2)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return 0, nil
+		}
+		return 0, err
+	}
+	return CO2, nil
+}
+
+func (db *DBManager) GetCO2OfPrevMonth(userUUID string) (float64, error) {
+	var CO2 float64
+	err := db.db.QueryRow("SELECT SUM(CO2) FROM travels WHERE userUUID = ? AND CAST(strftime('%m',Date) AS INTEGER) = (CAST(strftime('%m',CURRENT_DATE) AS INTEGER) -1)", userUUID).Scan(&CO2)
+	if err != nil {
+		return -1, nil
+	}
+	return CO2, nil
+}
